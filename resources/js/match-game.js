@@ -3,6 +3,8 @@ $(document).ready(function() {
 });
 
 var MatchGame = {};
+var flippedCount = 0;
+var timerID = 0;
 
 /*
   Sets up a new game after HTML document has loaded.
@@ -47,6 +49,9 @@ MatchGame.renderCards = function(cardValues, $game) {
   ];
   var $card = {};
   $game.data('flippedCards', []);
+  $game.data('inProgress', false);
+  $game.data('flippedCount', 0);
+  flippedCount = 0;
   $game.empty();
   for (i = 0; i < 16; i++) {
     $card = $('<div class="card col-xs-3"></div>');
@@ -57,6 +62,11 @@ MatchGame.renderCards = function(cardValues, $game) {
   }
   $('.card').on('click', function() {
     MatchGame.flipCard($(this), $('#game'));
+  });
+  $('#reset-button').on('click', function() {
+    clearInterval(timerID);
+    $('.timer').text("Game Timer:");
+    MatchGame.renderCards(MatchGame.generateCardValues(), $('#game'));
   });
 };
 
@@ -69,7 +79,10 @@ MatchGame.flipCard = function($card, $game) {
   if ($card.data('flipped')) {
     return;
   }
-
+  if ($game.data('inProgress') === false) {
+    MatchGame.gameTimer();
+  }
+  $game.data('inProgress', true);
   $card.css('background-color', $card.data('color'));
   $card.text($card.data('value'));
   $card.data('flipped', true);
@@ -81,6 +94,8 @@ MatchGame.flipCard = function($card, $game) {
       flippedCards[0].css('background-color', 'rgb(153, 153, 153)');
       flippedCards[1].css('color', 'rgb(204, 204, 204)');
       flippedCards[1].css('background-color', 'rgb(153, 153, 153)');
+      flippedCount = flippedCount + 2;
+      $game.data('flippedCount', flippedCount)
     } else {
       window.setTimeout(function() {
         flippedCards[0].css('color', 'rgb(255, 255, 255)');
@@ -94,5 +109,19 @@ MatchGame.flipCard = function($card, $game) {
       }, 500);
     }
     $game.data('flippedCards', []);
+    if (flippedCount === 16) {
+      clearInterval(timerID);
+      console.log('Game over man!');
+    }
   }
+};
+
+/* timer function */
+
+MatchGame.gameTimer = function() {
+  console.log(flippedCount);
+  var start = new Date;
+  timerID = setInterval(function() {
+    $('.timer').text("Game Timer: " + Math.round((new Date - start) / 1000, 0) + " Seconds");
+  }, 1000);
 };
