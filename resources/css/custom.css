@@ -37,14 +37,15 @@ h1, h2, h3, h4, h5, h6, p, div {
 }
 
 body {
-  background-color: rgb(255, 242, 242);
-  margin-top: 5.25rem;
+  background-color: rgb(217, 217, 217);
+  margin-top: 2rem;
 }
 
 h1 {
   font-weight: bold;
   font-size: 2.5rem;
   color: rgb(32, 64, 86);
+  margin-top: 0;
 }
 
 strong {
@@ -79,4 +80,9 @@ p {
   font-size: 7rem;
   color: rgb(255, 255, 255);
   cursor: pointer;
+  transition: all 250ms;
+}
+
+.card:hover {
+  border-color: #00ffff;
 }

@@ -65,7 +65,7 @@ MatchGame.renderCards = function(cardValues, $game) {
   });
   $('#reset-button').on('click', function() {
     clearInterval(timerID);
-    $('.timer').text("Game Timer:");
+    $('.timer').text("");
     MatchGame.renderCards(MatchGame.generateCardValues(), $('#game'));
   });
 };
@@ -111,7 +111,15 @@ MatchGame.flipCard = function($card, $game) {
     $game.data('flippedCards', []);
     if (flippedCount === 16) {
       clearInterval(timerID);
-      console.log('Game over man!');
+      $('.card').each(function(){
+        $('.card').css({
+          "background-color": "green",
+          "color": "black"
+        });
+      });
+      window.setTimeout(function() {
+        alert('Game over man! You finished in ' + $('.timer').text() + "!");
+      }, 500);
     }
   }
 };
@@ -119,9 +127,8 @@ MatchGame.flipCard = function($card, $game) {
 /* timer function */
 
 MatchGame.gameTimer = function() {
-  console.log(flippedCount);
   var start = new Date;
   timerID = setInterval(function() {
-    $('.timer').text("Game Timer: " + Math.round((new Date - start) / 1000, 0) + " Seconds");
+    $('.timer').text(Math.round((new Date - start) / 1000, 0) + " Seconds");
   }, 1000);
 };
