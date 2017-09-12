@@ -5,6 +5,8 @@ $(document).ready(function() {
 var MatchGame = {};
 var flippedCount = 0;
 var timerID = 0;
+var gameTime = 0;
+var topScores = [];
 
 /*
   Sets up a new game after HTML document has loaded.
@@ -111,15 +113,40 @@ MatchGame.flipCard = function($card, $game) {
     $game.data('flippedCards', []);
     if (flippedCount === 16) {
       clearInterval(timerID);
-      $('.card').each(function(){
+      $('.card').each(function() {
         $('.card').css({
           "background-color": "green",
           "color": "black"
         });
       });
       window.setTimeout(function() {
-        alert('Game over man! You finished in ' + $('.timer').text() + "!");
+        alert('Game over man! You finished in ' + gameTime + " seconds!");
       }, 500);
+      if (topScores.length < 3) {
+        topScores.push(gameTime);
+        topScores.sort(function(a, b) {
+          return a - b
+        });
+      } else {
+        for (var i = 0; i < topScores.length; i++) {
+          if (gameTime < topScores[i]) {
+            topScores[i] = gameTime;
+            topScores.sort(function(a, b) {
+              return a - b
+            });
+            break;
+          }
+        }
+      }
+      if (topScores.length > 0) {
+        $('#score1').text('#1 - ' + topScores[0] + ' Seconds');
+      }
+      if (topScores.length > 1) {
+        $('#score2').text('#2 - ' + topScores[1] + ' Seconds');
+      }
+      if (topScores.length > 2) {
+        $('#score3').text('#3 - ' + topScores[2] + ' Seconds');
+      }
     }
   }
 };
@@ -128,7 +155,9 @@ MatchGame.flipCard = function($card, $game) {
 
 MatchGame.gameTimer = function() {
   var start = new Date;
+  gameTime = 0;
   timerID = setInterval(function() {
-    $('.timer').text(Math.round((new Date - start) / 1000, 0) + " Seconds");
+    gameTime = Math.round((new Date - start) / 1000, 0)
+    $('.timer').text(gameTime + " Seconds");
   }, 1000);
 };
