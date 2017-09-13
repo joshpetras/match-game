@@ -105,6 +105,9 @@ p {
 }
 
 @media (max-width: 480px) {
+  body {
+    margin-top: 1rem;
+  }
   h1, h2 {
     font-size: 2rem;
   }
