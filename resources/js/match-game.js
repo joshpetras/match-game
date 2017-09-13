@@ -158,6 +158,6 @@ MatchGame.gameTimer = function() {
   gameTime = 0;
   timerID = setInterval(function() {
     gameTime = Math.round((new Date - start) / 1000, 0)
-    $('.timer').text(gameTime + " Seconds");
+    $('.timer').text(gameTime);
   }, 1000);
 };

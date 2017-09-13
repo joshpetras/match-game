@@ -85,7 +85,6 @@ p {
   font-weight: bold;
 }
 
-/* Cards */
 .card {
   display: flex;
   justify-content: center;
@@ -103,4 +102,21 @@ p {
 
 .card:hover {
   border-color: #00ffff;
+}
+
+@media (max-width: 480px) {
+  h1, h2 {
+    font-size: 2rem;
+  }
+  .card {
+    height: 8rem;
+  }
+  #rules p {
+    display: none;
+  }
+  #score1, #score2, #score3 {
+    height: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0.2rem;
+  }
 }
