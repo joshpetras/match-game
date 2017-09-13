@@ -112,7 +112,8 @@ p {
     font-size: 2rem;
   }
   .card {
-    height: 7.5rem;
+    height: 7rem;
+    font-size: 5rem;
   }
   #rules p {
     display: none;
