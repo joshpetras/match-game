@@ -122,22 +122,10 @@ MatchGame.flipCard = function($card, $game) {
       window.setTimeout(function() {
         alert('Game over man! You finished in ' + gameTime + " seconds!");
       }, 500);
-      if (topScores.length < 3) {
-        topScores.push(gameTime);
-        topScores.sort(function(a, b) {
-          return a - b
-        });
-      } else {
-        for (var i = 0; i < topScores.length; i++) {
-          if (gameTime < topScores[i]) {
-            topScores[i] = gameTime;
-            topScores.sort(function(a, b) {
-              return a - b
-            });
-            break;
-          }
-        }
-      }
+      topScores.push(gameTime);
+      topScores.sort(function(a, b) {
+        return a - b
+      });
       if (topScores.length > 0) {
         $('#score1').text('#1 - ' + topScores[0] + ' Seconds');
       }
